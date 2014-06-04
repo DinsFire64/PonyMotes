@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/prefGeneral">  
+		<CheckBoxPreference android:key="prefDisableMobile" android:summary="@string/prefDisableMobileDescription" android:title="@string/prefDisableMobile" android:defaultValue="true"/>
+		<CheckBoxPreference android:title="@string/prefShowOnboardingSession" android:defaultValue="true" android:summary="@string/prefShowOnboardingSessionDescription" android:key="prefShowOnboardingSession"/><CheckBoxPreference android:title="@string/prefIncludeNSFW" android:defaultValue="false" android:summary="@string/prefIncludeNSFWDescription" android:key="prefIncludeNSFW"/>
+		
+	</PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/syncSettings">
+        <!--<EditTextPreference android:defaultValue="RedditEmotes" android:title="@string/prefDirectory" android:key="prefDirectory" android:summary="@string/prefDirectoryDescription"/>-->
+        <CheckBoxPreference android:title="@string/downloadEmotes" android:key="prefDownloadEmotes" android:defaultValue="true" android:summary="@string/prefDownloadEmotesDescription" />
+        <CheckBoxPreference android:title="@string/prefDownloadMissingEmotes" android:summary="@string/prefDownloadMissingEmotesDescription" android:key="prefDownloadMissingEmotes" android:defaultValue="true"/>
+	</PreferenceCategory>
+	
+    <PreferenceCategory android:title="@string/prefSearching">
+        <EditTextPreference android:key="prefSearchResultLimit" android:inputType="number" android:summary="@string/prefSearchResultLimitDescription" android:title="@string/prefSearchResultLimit" android:defaultValue="200"/>
+        <EditTextPreference android:key="prefNumOfColumns" android:title="@string/prefNumOfColumns" android:inputType="number" android:summary="@string/prefNumOfColumnsDescription"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/prefAdvanced">
+        <CheckBoxPreference android:title="@string/prefAltSharingMethod" android:defaultValue="false" android:key="prefAltSharingMethod" android:summary="@string/prefAltSharingMethodDescription"/>
+    </PreferenceCategory>
+    
+</PreferenceScreen>

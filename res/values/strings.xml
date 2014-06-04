@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PonyMotes</string>
+    <string name="action_settings">Settings</string>
+    <string name="numOfResults">Results:</string>
+    <string name="newEmotes">New Emotes:</string>
+    <string name="updateDatabase">Update Database</string>
+    <string name="updateDatabaseCompressed">Update</string>
+    <string name="downloadEmotes">Download New/Updated Emotes</string>
+    <string name="prefDownloadEmotesDescription">When syncing databases, if an old emote has been updated then they it will be replaced on your device.</string>
+    <string name="syncSettings">Sync</string>
+    <string name="prefSearching">Searching</string>
+    <string name="prefGeneral">General</string>
+    <string name="prefIncludeNSFW">Adult Emotes</string>
+    <string name="prefIncludeNSFWDescription">Include known NSFW emotes in your database.</string>
+    <string name="prefDownloadMissingEmotes">Download Missing Emotes</string>
+    <string name="prefDownloadMissingEmotesDescription">If an emote is not found on your device, they will be retrieved from the server.</string>
+    <string name="prefDirectory">Emote Directory</string>
+    <string name="prefDirectoryDescription">This option currently has no purpose.</string>
+    <string name="prefDisableMobile">Disable Sync on Mobile Data</string>
+    <string name="prefDisableMobileDescription">Application will deny requests to sync on mobile data.</string>
+    <string name="notificationTitle">PonyMotes Update</string>
+    <string name="syncingDisabled">Syncing on mobile is disabled in settings.</string>
+    <string name="downloadingNewDatabase">Downloading new database</string>
+    <string name="comparingDatabases">Comparing Databases</string>
+    <string name="connectionError">There was a connection error.</string>
+    <string name="upToDate">All emotes up to date.</string>
+    <string name="downloading">Downloading:</string>
+    <string name="searchQuery">Enter a Search Query</string>
+    <string name="prefNumOfColumns">Number of Columns</string>
+    <string name="prefNumOfColumnsDescription">Controls the number of columns shown in the search results.</string>
+    <string name="prefSearchResultLimit">Search Result Limit</string>
+    <string name="prefSearchResultLimitDescription">Limits the number search results. Lower numbers will reduce system load. Set to 0 for unlimited.</string>
+    <string name="title_activity_help">Help</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="help">Help</string>
+    <string name="prefAdvanced">Advanced</string>
+    <string name="prefAltSharingMethod">Alternate Sharing Method</string>
+    <string name="prefAltSharingMethodDescription">If sharing is giving you an issue, select this checkbox.</string>
+    <string name="prefShowOnboardingSession">Show Onboarding Session</string>
+    <string name="prefShowOnboardingSessionDescription">When checked, the app will show a walkthrough on startup.</string>
+    <string name="about">About</string>
+    <string name="onboardingMessage">To begin using PonyMotes an initial sync is required. This takes up about 200MB of storage and can take a while to download. Would you like to start your first sync and open the help menu?</string>
+    <string name="onboardingTitle">Welcome to PonyMotes!</string>
+    <string name="onboardingOk">OK!</string>
+    <string name="onboardingNo">No Thanks</string>
+    <string name="title_activity_emote_popup">EmotePopup</string>
+
+</resources>
