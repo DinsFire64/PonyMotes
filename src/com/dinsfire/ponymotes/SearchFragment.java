@@ -93,11 +93,12 @@ public class SearchFragment extends Fragment {
 	            if(currentMode == SearchMode.RETURN_PICTURE) {
 	            	
 	            	Intent data = new Intent();
+	            	data.setType("image/*");
 	            	
 	            	if(prefs.altSharingMethod())
-	            		data.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(FileIO.getEmoteByName(emoteAdapter.getItem(position))));
+	            		data.setData(Uri.fromFile(FileIO.getEmoteByName(emoteAdapter.getItem(position))));
 	        	    else
-	        	    	data.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(FileIO.copyTempEmote(emoteAdapter.getItem(position)))));
+	        	    	data.setData(Uri.fromFile(new File(FileIO.copyTempEmote(emoteAdapter.getItem(position)))));
 	        		
 					getActivity().setResult(Activity.RESULT_OK, data);
 	        		getActivity().finish();
