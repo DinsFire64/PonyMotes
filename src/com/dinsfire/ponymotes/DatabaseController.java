@@ -323,7 +323,7 @@ public class DatabaseController {
 			stringToDownload.add(toDownload.get(i).getEmoteName());
 
 		// TODO: update this code. Implement the check somewhere else.
-		// SOMETHING.
+		// SOMETHING....
 		if (downloadEmotes) {
 			if (downloadMissingEmotes)
 				stringNewEmotes.addAll(stringToDownload);
