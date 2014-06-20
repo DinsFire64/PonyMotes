@@ -17,71 +17,68 @@ import android.util.Log;
 
 public class Download {
 
-	public static final int TIMEOUT = 5000;
+    public static final int TIMEOUT = 5000;
 
-	public static boolean from(String url, String local) {
+    public static boolean from(String url, String local) {
 
-		boolean error = false;
+	boolean error = false;
 
-		try {
-			Log.i("downloading", url);
+	try {
+	    Log.i("downloading", url);
 
-			URL u = new URL(url);
-			HttpURLConnection c = (HttpURLConnection) u.openConnection();
-			// c.setConnectTimeout(TIMEOUT);
-			// c.setReadTimeout(TIMEOUT);
-			// c.setRequestMethod("GET");
-			// c.setDoOutput(true);
-			c.connect();
+	    URL u = new URL(url);
+	    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+	    // c.setConnectTimeout(TIMEOUT);
+	    // c.setReadTimeout(TIMEOUT);
+	    // c.setRequestMethod("GET");
+	    // c.setDoOutput(true);
+	    c.connect();
 
-			FileOutputStream f = new FileOutputStream(local);
+	    FileOutputStream f = new FileOutputStream(local);
 
-			InputStream in = c.getInputStream();
+	    InputStream in = c.getInputStream();
 
-			byte[] buffer = new byte[1024];
-			int len1 = 0;
-			while ((len1 = in.read(buffer)) > 0) {
-				f.write(buffer, 0, len1);
-			}
+	    byte[] buffer = new byte[1024];
+	    int len1 = 0;
+	    while ((len1 = in.read(buffer)) > 0) {
+		f.write(buffer, 0, len1);
+	    }
 
-			f.close();
+	    f.close();
 
-		} catch (FileNotFoundException e) {
-			if (e.getMessage() != null)
-				Log.d("downloaderFileNotFoundException", e.getMessage());
-		} catch (IOException e) {
-			if (e.getMessage() != null)
-				Log.d("downloaderIOException", e.getMessage());
-			error = true;
-		} catch (Exception e) {
-			if (e.getMessage() != null)
-				Log.d("downoaderOtherException", e.getMessage());
+	} catch (FileNotFoundException e) {
+	    if (e.getMessage() != null)
+		Log.d("downloaderFileNotFoundException", e.getMessage());
+	} catch (IOException e) {
+	    if (e.getMessage() != null)
+		Log.d("downloaderIOException", e.getMessage());
+	    error = true;
+	} catch (Exception e) {
+	    if (e.getMessage() != null)
+		Log.d("downoaderOtherException", e.getMessage());
 
-			error = true;
-		}
-
-		return error;
+	    error = true;
 	}
 
-	public static final boolean isConnectedToMobile(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetwork = cm
-				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+	return error;
+    }
 
-		return activeNetwork != null && activeNetwork.isConnected();
-	}
+    public static final boolean isConnectedToMobile(Context context) {
+	ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	NetworkInfo activeNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-	public static void setUserAgent(PackageManager p) {
-		PackageInfo pInfo;
-		try {
-			pInfo = p.getPackageInfo("com.dinsfire.ponymotes", 0);
-			System.setProperty("http.agent", pInfo.packageName + " "
-					+ pInfo.versionName);
-		} catch (NameNotFoundException e) {
-			Log.e("NameNotFoundException", e.toString());
-			System.setProperty("http.agent", "?????");
-		}
+	return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    public static void setUserAgent(PackageManager p) {
+	PackageInfo pInfo;
+	try {
+	    pInfo = p.getPackageInfo("com.dinsfire.ponymotes", 0);
+	    System.setProperty("http.agent", pInfo.packageName + " " + pInfo.versionName);
+	} catch (NameNotFoundException e) {
+	    Log.e("NameNotFoundException", e.toString());
+	    System.setProperty("http.agent", "?????");
 	}
+    }
 
 }

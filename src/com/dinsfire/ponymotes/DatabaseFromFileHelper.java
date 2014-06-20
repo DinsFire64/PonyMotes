@@ -11,42 +11,40 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseFromFileHelper {
 
-	private String dbName;
-	private Context context;
+    private String dbName;
+    private Context context;
 
-	public DatabaseFromFileHelper(Context context, String dbName) {
-		this.context = context;
-		this.dbName = dbName;
+    public DatabaseFromFileHelper(Context context, String dbName) {
+	this.context = context;
+	this.dbName = dbName;
+    }
+
+    public SQLiteDatabase openDatabase() {
+	File dbFile = context.getDatabasePath(dbName);
+
+	if (!dbFile.exists()) {
+	    try {
+		copyDatabase(dbFile);
+	    } catch (IOException e) {
+		throw new RuntimeException("Error creating source database", e);
+	    }
 	}
 
-	public SQLiteDatabase openDatabase() {
-		File dbFile = context.getDatabasePath(dbName);
+	return SQLiteDatabase.openDatabase(dbFile.getPath(), null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+    }
 
-		if (!dbFile.exists()) {
-			try {
-				copyDatabase(dbFile);
-			} catch (IOException e) {
-				throw new RuntimeException("Error creating source database", e);
-			}
-		}
+    private void copyDatabase(File dbFile) throws IOException {
+	FileInputStream is = new FileInputStream(context.getCacheDir().toString() + "/" + dbName);
+	OutputStream os = new FileOutputStream(dbFile);
 
-		return SQLiteDatabase.openDatabase(dbFile.getPath(), null,
-				SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+	byte[] buffer = new byte[1024];
+	while (is.read(buffer) > 0) {
+	    os.write(buffer);
 	}
 
-	private void copyDatabase(File dbFile) throws IOException {
-		FileInputStream is = new FileInputStream(context.getCacheDir()
-				.toString() + "/" + dbName);
-		OutputStream os = new FileOutputStream(dbFile);
-
-		byte[] buffer = new byte[1024];
-		while (is.read(buffer) > 0) {
-			os.write(buffer);
-		}
-
-		os.flush();
-		os.close();
-		is.close();
-	}
+	os.flush();
+	os.close();
+	is.close();
+    }
 
 }
