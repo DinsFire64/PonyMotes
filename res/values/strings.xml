@@ -46,5 +46,6 @@
     <string name="onboardingOk">OK!</string>
     <string name="onboardingNo">No Thanks</string>
     <string name="title_activity_emote_popup">EmotePopup</string>
+    <string name="emoteInfoNameHeader">Emote Name:</string>
 
 </resources>

@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -122,7 +123,8 @@ public class SearchFragment extends Fragment {
 	    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 		if (currentMode == SearchMode.NORMAL) {
-		    shareEmote(emoteAdapter.getItem(position));
+		    // shareEmote(emoteAdapter.getItem(position));
+		    showPopup(emoteAdapter.getItem(position));
 		}
 
 		return true;
@@ -153,19 +155,57 @@ public class SearchFragment extends Fragment {
 	return rootView;
     }
 
+    public void showPopup(String emoteName) {
+	EmoteDetailsDialog emoteInfo = new EmoteDetailsDialog(getActivity());
+	emoteInfo.setContentView(R.layout.dialog_emote_info);
+	emoteInfo.setTitle(emoteName);
+	emoteInfo.setCancelable(true);
+
+	// Set the emote in the imageview
+	ImageView img = (ImageView) emoteInfo.findViewById(R.id.emoteInfoImageView);
+
+	if (FileIO.emoteExistsInStorage(emoteName)) {
+	    Drawable d = Drawable.createFromPath(FileIO.getEmotePath(emoteName));
+	    img.setImageDrawable(d);
+	}
+
+	// Get the information about the emote to display
+	dbController.open();
+	Emote emoteInfomation = dbController.getInfoForEmote(emoteName);
+	dbController.close();
+
+	// TextView emoteNameTextView = (TextView)
+	// emoteInfo.findViewById(R.id.emoteName);
+	// emoteNameTextView.setText(emoteName);
+
+	// ListView emoteListView = (ListView)
+	// emoteInfo.findViewById(R.id.emoteListView);
+
+	emoteInfo.show();
+    }
+
     public void shareEmote(String emoteName) {
 	Intent share = new Intent(Intent.ACTION_SEND);
 	share.setType("image/*");
 
 	Log.i("shareDebug", "prefs: " + String.valueOf(prefs.altSharingMethod()));
 	Log.i("shareDebug", "emoteName: " + emoteName);
-	Log.i("shareDebug", "FileIO Return: " + FileIO.getEmoteByName(emoteName).toString());
-	Log.i("shareDebug", "URI Creation: " + Uri.fromFile(FileIO.getEmoteByName(emoteName)));
 
 	if (prefs.altSharingMethod())
 	    share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(FileIO.getEmoteByName(emoteName)));
-	else
-	    share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(FileIO.copyTempEmote(emoteName))));
+	else {
+
+	    Log.i("shareDebug", "FileIO Return: " + FileIO.getEmoteByName(emoteName).toString());
+	    Log.i("shareDebug", "Emote File Exists: " + String.valueOf(FileIO.getEmoteByName(emoteName).exists()));
+	    Log.i("shareDebug", "URI Creation: " + Uri.fromFile(FileIO.getEmoteByName(emoteName)));
+
+	    File tempEmote = new File(FileIO.copyTempEmote(emoteName));
+
+	    Log.i("shareDebug", "temp exists: " + String.valueOf(tempEmote.exists()));
+
+	    share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempEmote));
+
+	}
 
 	startActivity(Intent.createChooser(share, "Share emote via"));
     }

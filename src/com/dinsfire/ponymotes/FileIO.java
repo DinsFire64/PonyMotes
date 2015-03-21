@@ -136,8 +136,14 @@ public class FileIO {
 	    while ((len = in.read(buf)) > 0) {
 		out.write(buf, 0, len);
 	    }
+
 	    in.close();
+	    out.flush();
 	    out.close();
+
+	    Log.i("shareDebug", "fullPath: " + fullPath);
+	    Log.i("shareDebug", "Temp created!");
+
 	} catch (IOException e) {
 	    Log.e("tempEmpte", e.toString());
 	}

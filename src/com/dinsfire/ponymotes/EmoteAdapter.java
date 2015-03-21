@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,20 +61,21 @@ public class EmoteAdapter extends BaseAdapter {
 	} else {
 	    holder = (ViewHolder) view.getTag();
 	    holder.emotePicture.setImageResource(android.R.color.transparent);
-	    holder.name.setText(items.get(i));
+	    // holder.name.setText(items.get(i));
 	}
 
 	holder.position = i;
 
-	holder.emotePicture.setImageResource(0);
+	Animation myFadeInAnimation = AnimationUtils.loadAnimation(inflater.getContext(), R.anim.fade_in);
 
 	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 
 	if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 	    try {
-		new ThumbnailTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i, holder, items.get(i));
+		new ThumbnailTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i, holder, items.get(i),
+			myFadeInAnimation);
 	    } catch (Exception e) {
-
+		// Do nothing as the pool is full, just wait it out.
 	    }
 	} else {
 	    new ThumbnailTask().execute(i, holder, items.get(i));
@@ -86,6 +89,7 @@ public class EmoteAdapter extends BaseAdapter {
 	private int mPosition;
 	private ViewHolder mHolder;
 	private String mEmoteName;
+	private Animation myFadeInAnimation;
 
 	@Override
 	protected Drawable doInBackground(Object... params) {
@@ -93,6 +97,7 @@ public class EmoteAdapter extends BaseAdapter {
 	    mPosition = (int) params[0];
 	    mHolder = (ViewHolder) params[1];
 	    mEmoteName = (String) params[2];
+	    myFadeInAnimation = (Animation) params[3];
 	    Drawable d = null;
 
 	    if (FileIO.emoteExistsInStorage(mEmoteName))
@@ -108,6 +113,7 @@ public class EmoteAdapter extends BaseAdapter {
 		mHolder.emotePicture.setPadding(5, 5, 5, 5);
 
 		if (d != null) {
+		    mHolder.emotePicture.startAnimation(myFadeInAnimation);
 		    mHolder.emotePicture.setImageDrawable(d);
 		    mHolder.name.setText("");
 		} else {

@@ -174,9 +174,10 @@ public class DatabaseController {
 	return result;
     }
 
-    public Cursor getInfoForEmote(String emoteName) {
+    public Cursor getCursorForEmote(String emoteName) {
 
-	String columns[] = { DatabaseOpenHelper.COLUMN_EMOTE_NAME, DatabaseOpenHelper.COLUMN_DATE_MODIFIED };
+	String columns[] = { DatabaseOpenHelper.COLUMN_EMOTE_NAME, DatabaseOpenHelper.COLUMN_DATE_MODIFIED,
+		DatabaseOpenHelper.COLUMN_TAGS, DatabaseOpenHelper.COLUMN_NSFW, DatabaseOpenHelper.COLUMN_SOURCE };
 	String where = DatabaseOpenHelper.COLUMN_EMOTE_NAME + " = ?";
 	String[] arguments = { emoteName };
 
@@ -186,6 +187,19 @@ public class DatabaseController {
 	cursor.moveToFirst();
 
 	return cursor;
+    }
+
+    public Emote getInfoForEmote(String emoteName) {
+	Cursor tempCursor = getCursorForEmote(emoteName);
+
+	int dateModified = tempCursor.getInt(tempCursor.getColumnIndex(DatabaseOpenHelper.COLUMN_DATE_MODIFIED));
+	String tags = tempCursor.getString(tempCursor.getColumnIndex(DatabaseOpenHelper.COLUMN_TAGS));
+	int isNSFW = tempCursor.getInt(tempCursor.getColumnIndex(DatabaseOpenHelper.COLUMN_NSFW));
+	String source = tempCursor.getString(tempCursor.getColumnIndex(DatabaseOpenHelper.COLUMN_SOURCE));
+
+	tempCursor.close();
+
+	return new Emote(emoteName, tags, isNSFW, dateModified, source);
     }
 
     public int getNumberOfRows() {
@@ -233,7 +247,7 @@ public class DatabaseController {
 
 	    if (!newEmote.isNSFW() || includeNSFW) {
 
-		Cursor oldCursor = localDB.getInfoForEmote(emoteName);
+		Cursor oldCursor = localDB.getCursorForEmote(emoteName);
 
 		// Check to see if the emote exists in old table
 		if (oldCursor.getCount() > 0) {

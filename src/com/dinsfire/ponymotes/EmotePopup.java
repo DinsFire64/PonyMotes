@@ -13,9 +13,9 @@ public class EmotePopup extends ActionBarActivity {
 	super.onCreate(savedInstanceState);
 
 	/*
-	 * // Figure out what to do based on the intent type if
-	 * (intent.getType().indexOf("image/") != -1) { // Handle intents with
-	 * image data ... } else if (intent.getType().equals("text/plain")) { //
+	 * // Figure out what to do based on the intent type if (intent.
+	 * getType().indexOf("image/") != -1) { // Handle intents with image
+	 * data ... } else if (intent.getType().equals("text/plain")) { //
 	 * Handle intents with text ... }
 	 */
 
@@ -27,6 +27,9 @@ public class EmotePopup extends ActionBarActivity {
 	}
 
 	setContentView(R.layout.activity_emote_popup);
+
+	// getWindow().getDecorView().setBackground(getResources().getDrawable(R.drawable.abs__dialog_full_holo_dark));
+	// getWindow().getDecorView().setBackgroundColor(0);
 
 	if (savedInstanceState == null) {
 
@@ -47,5 +50,4 @@ public class EmotePopup extends ActionBarActivity {
 	}
 
     }
-
 }
